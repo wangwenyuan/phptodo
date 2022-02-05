@@ -102,7 +102,7 @@ class TDWIDGET
     static function date_part($name, $start_datetime, $end_datetime)
     {
         $html = "<input type=\"text\" class=\"ui-c-input\" style=\"width:200px;\" name=\"" . $name . "_1\" value=\"" . $start_datetime . "\" id=\"" . $name . "_1\"  placeholder=\"开始时间\" />-";
-        $html = $html . "<input type=\"text\" class=\"ui-c-input\" style=\"width:200px;\" name=\"" . $name . "_2\" value=\"" . $start_datetime . "\" id=\"" . $name . "_2\" placeholder=\"结束时间\" />";
+        $html = $html . "<input type=\"text\" class=\"ui-c-input\" style=\"width:200px;\" name=\"" . $name . "_2\" value=\"" . $end_datetime . "\" id=\"" . $name . "_2\" placeholder=\"结束时间\" />";
         $html = $html . "<script>\r\n" . "    	    $(\"#" . $name . "_1\").jeDate({\r\n" . "                multiPane:true,\r\n" . "                onClose:false,\r\n" . "                minDate: \"1900-01-01 00:00:00\", //最小日期\r\n" . "                maxDate: \"2099-12-31 23:59:59\", //最大日期\r\n" . "                format: \"YYYY-MM-DD hh:mm:ss\"\r\n" . "            });\r\n" . "            $(\"#" . $name . "_2\").jeDate({\r\n" . "                multiPane:true,\r\n" . "                onClose:false,\r\n" . "                minDate: \"1900-01-01 00:00:00\", //最小日期\r\n" . "                maxDate: \"2099-12-31 23:59:59\", //最大日期\r\n" . "                format: \"YYYY-MM-DD hh:mm:ss\"\r\n" . "            });\r\n" . "    	</script>";
         return $html;
     }
@@ -111,7 +111,7 @@ class TDWIDGET
     {
         $html = "省份：<select name=\"" . $province_id . "\" id=\"" . $province_id . "\" class=\"input_select\"></select> &nbsp;&nbsp; 城市：<select name=\"" . $city_id . "\" id=\"" . $city_id . "\" class=\"input_select\"></select> &nbsp;&nbsp; 区县：<select name=\"" . $area_id . "\" id=\"" . $area_id . "\" class=\"input_select\"></select>";
         $html = $html . "<script>";
-        $html = $html . "shop.address.init(\"" . $province_id . "\", \"" . $province_id_val . "\", \"" . $city_id . "\", \"" . $city_id_val . "\", \"" . $area_id . "\", \"" . $area_id_val . "\");";
+        $html = $html . "phptodo.address.init(\"" . $province_id . "\", \"" . $province_id_val . "\", \"" . $city_id . "\", \"" . $city_id_val . "\", \"" . $area_id . "\", \"" . $area_id_val . "\");";
         $html = $html . "</script>";
         return $html;
     }
