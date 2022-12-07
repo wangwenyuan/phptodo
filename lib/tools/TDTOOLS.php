@@ -43,6 +43,41 @@ function TDU($uri, $param = array())
     return $url;
 }
 
+function TDUU($uri, $param = array(), $entrance = "index.php")
+{
+    if (is_string($uri) && trim($uri) != "") {
+        $uri_arr = explode("/", $uri);
+        if (count($uri_arr) == 3) {
+            $param[TDConfig::$todo_pre . "m"] = trim($uri_arr[0]);
+            $param[TDConfig::$todo_pre . "c"] = trim($uri_arr[1]);
+            $param[TDConfig::$todo_pre . "a"] = trim($uri_arr[2]);
+        }
+        if (count($uri_arr) == 2) {
+            $param[TDConfig::$todo_pre . "c"] = trim($uri_arr[0]);
+            $param[TDConfig::$todo_pre . "a"] = trim($uri_arr[1]);
+        }
+        if (count($uri_arr) == 1) {
+            $param[TDConfig::$todo_pre . "a"] = trim($uri_arr[0]);
+        }
+    }
+    if (is_array($uri)) {
+        foreach ($uri as $key => $val) {
+            $param[$key] = $val;
+        }
+    }
+    $url = "./" . $entrance;
+    $paramar = "";
+    foreach ($param as $key => $val) {
+        if ($paramar == "") {
+            $paramar = "?" . $key . "=" . $val;
+        } else {
+            $paramar = $paramar . "&" . $key . "=" . $val;
+        }
+    }
+    $url = $url . $paramar;
+    return $url;
+}
+
 function TDI($parameter)
 {
     $param = explode(".", $parameter);

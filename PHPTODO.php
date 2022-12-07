@@ -5,6 +5,7 @@
  * Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * Author: wangwenyuan <827287829@qq.com>
  */
+error_reporting(E_ALL & ~ E_NOTICE & ~ E_WARNING);
 define(PHPTODO, true);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     define(TD_IS_POST, true);
@@ -15,7 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     define(TD_IS_GET, true);
 }
 
-define(TD_URL, $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST']);
+$php_self = $_SERVER["PHP_SELF"];
+$php_self_arr = explode("/", $php_self);
+$TD_ROOT = "";
+for ($i = 0; $i < count($php_self_arr) - 1; $i = $i + 1) {
+    if ($php_self_arr[$i] == "") {
+        continue;
+    }
+    $TD_ROOT = $TD_ROOT . "/" . $php_self_arr[$i];
+}
+define(TD_ROOT, $TD_ROOT);
+
+if ($_SERVER["SERVER_PORT"] == 80 || $_SERVER["SERVER_PORT"] == 443) {
+    define(TD_URL, $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . TD_ROOT);
+} else {
+    define(TD_URL, $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . ":" . $_SERVER["SERVER_PORT"] . TD_ROOT);
+}
 
 require_once __DIR__ . "/TDConfig.php";
 require_once __DIR__ . "/lib/orm/TDORM.php";
@@ -34,51 +50,6 @@ require_once __DIR__ . "/lib/controller/TDCONTROLLER.php";
 
 class PHPTODO
 {
-
-    public static function header()
-    {
-        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . TDConfig::$url . "resources/css/css.css\"/>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/jquery-1.12.4.min.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/jquery.slimscroll.min.js\"></script>";
-        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . TDConfig::$url . "resources/css/pintuer.css\" />";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/jquery.cookie.js\"></script>";
-        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . TDConfig::$url . "resources/css/zTreeStyle/zTreeStyle.css\" />";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/jquery.ztree.all.min.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/layer.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/http.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/drop.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/js.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/jedate/jquery.jedate.js\"></script>";
-        echo "<link type=\"text/css\" rel=\"stylesheet\" href=\"" . TDConfig::$url . "resources/jedate/skin/jedate.css\">";
-        echo "<link href=\"" . TDConfig::$url . "resources/ui-c/form/form.css\" rel=\"stylesheet\" type=\"text/css\" />";
-        echo "<link href=\"" . TDConfig::$url . "resources/ui-c/form/select.css\" rel=\"stylesheet\" type=\"text/css\" />";
-        echo "<link href=\"" . TDConfig::$url . "resources/ui-c/form/radio.css\" rel=\"stylesheet\" type=\"text/css\" />";
-        echo "<link href=\"" . TDConfig::$url . "resources/ui-c/form/checkbox.css\" rel=\"stylesheet\" type=\"text/css\" />";
-        echo "<link href=\"" . TDConfig::$url . "resources/ui-c/form/open.css\" rel=\"stylesheet\" type=\"text/css\" />";
-        echo "<script src=\"" . TDConfig::$url . "resources/ui-c/ui-c.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/ui-c/form/form.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/ui-c/form/select.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/ui-c/form/radio.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/ui-c/form/checkbox.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/ui-c/form/open.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/js/jquery-ui.min.js\"></script>";
-        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . TDConfig::$url . "resources/css/jquery-ui.css\" />";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/editor/ueditor.config.js\"></script>";
-        echo "<script type=\"text/javascript\" src=\"" . TDConfig::$url . "resources/editor/ueditor.all.js\"></script>";
-        echo "<script>
-		function getObjectURL(file) {
-		    var url = null;
-		    if (window.createObjectURL != undefined) { // basic
-		        url = window.createObjectURL(file);
-		    } else if (window.URL != undefined) { // mozilla(firefox)
-		        url = window.URL.createObjectURL(file);
-		    } else if (window.webkitURL != undefined) { // webkit or chrome
-		        url = window.webkitURL.createObjectURL(file);
-		    }
-		    return url;
-		}
-		</script>";
-    }
 
     public static function run($app = "")
     {
