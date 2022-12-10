@@ -58,6 +58,9 @@ class TDConfig
     // 编辑器对应的控制器链接
     public static $editor_controller = TD_URL . "/phptodo/TDEditor.php";
 
+    // 全局配置
+    public static $config = array();
+
     // 上传的提交链接
     public static $upload_url = TD_URL . "/phptodo/TDUpload.php";
 }

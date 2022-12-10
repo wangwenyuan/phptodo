@@ -36,4 +36,9 @@ class TDCONTROLLER
         }
         $this->view->display($path);
     }
+
+    public function page($total, $num)
+    {
+        return new TDPAGE($total, $num);
+    }
 }
