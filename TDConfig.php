@@ -53,7 +53,7 @@ class TDConfig
     );
 
     // phptodo的根目录
-    public static $url = TD_URL . "/phptodo/";
+    public static $phptodo_url = TD_URL . "/phptodo/";
 
     // 编辑器对应的控制器链接
     public static $editor_controller = TD_URL . "/phptodo/TDEditor.php";

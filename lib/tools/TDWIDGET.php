@@ -38,7 +38,7 @@ class TDWIDGET
     {
         $html = "<input type=\"file\" id=\"" . $name . "_phptodo_upload_file\" accept=\"image/*\" multiple style=\"display:none\" />";
         if ($value == "") {
-            $html = $html . "<div id=\"" . $name . "_phptodo_upload_file_outerbox\" onclick=\"$('#" . $name . "_phptodo_upload_file').click()\" style=\"width: 100px; height:100px; background: center center no-repeat; background-size: cover; background-image: url(" . TDConfig::$url . "resources/images/upload.jpg);\">";
+            $html = $html . "<div id=\"" . $name . "_phptodo_upload_file_outerbox\" onclick=\"$('#" . $name . "_phptodo_upload_file').click()\" style=\"width: 100px; height:100px; background: center center no-repeat; background-size: cover; background-image: url(" . TDConfig::$phptodo_url . "resources/images/upload.jpg);\">";
         } else {
             $html = $html . "<div id=\"" . $name . "_phptodo_upload_file_outerbox\" onclick=\"$('#" . $name . "_phptodo_upload_file').click()\" style=\"width: 100px; height:100px; background: center center no-repeat; background-size: cover; background-image: url(" . $value . ");\">";
         }

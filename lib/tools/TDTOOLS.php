@@ -65,7 +65,7 @@ function TDUU($uri, $param = array(), $entrance = "index.php")
             $param[$key] = $val;
         }
     }
-    $url = "./" . $entrance;
+    $url = TD_URL . "/" . $entrance;
     $paramar = "";
     foreach ($param as $key => $val) {
         if ($paramar == "") {

@@ -5,6 +5,7 @@
  * Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * Author: wangwenyuan <827287829@qq.com>
  */
+exit();
 require_once 'PHPTODO.php';
 /**
  * 该文件缺少权限验证，仅仅作为demo提供*
