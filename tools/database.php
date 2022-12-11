@@ -64,3 +64,46 @@ for ($i = 0; $i < count($list); $i = $i + 1) {
     file_put_contents(TDConfig::$todo_database_orm_path . $table_name . ".data.php", $data_file_content);
     file_put_contents(TDConfig::$todo_database_orm_path . "_init.php", 'require_once __DIR__ . "/' . $table_name . '.columns.php";' . PHP_EOL, FILE_APPEND);
 }
+
+function writeSqlFile($dirPath)
+{
+    $sql = "SELECT table_name from information_schema.`TABLES` where TABLE_SCHEMA = '" . TDConfig::$db_name . "';";
+    $list = TDORM()->query($sql);
+    for ($i = 0; $i < count($list); $i = $i + 1) {
+        $table_name = $list[$i]["table_name"];
+        $table_name = str_replace(TDConfig::$table_pre, "", $table_name);
+
+        $sql = "show create table " . TDConfig::$table_pre . $table_name;
+        $table_list = TDORM()->query($sql);
+        for ($m = 0; $m < count($table_list); $m = $m + 1) {
+            $sql = $table_list[$m]["Create Table"];
+            // T.coverFile(save_path + table_name + ".sql", create_table_sql);
+            // writeSqlFile(table_name, create_table_sql);
+            $database_sql = "";
+            $install_sql = "";
+            $strings = explode("\n", $sql);
+            for ($i = 0; $i < count($strings); $i = $i + 1) {
+                $string = $strings[$i];
+                if (strpos($string, "ENGINE=InnoDB") !== false) {
+                    if (strpos($string, "COMMENT=") !== false || strpos($string, "COMMENT =") !== false) {
+                        $strings2 = explode("COMMENT", $string);
+                        $database_sql = $database_sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT" . $strings2[1];
+                    } else {
+                        $database_sql = $database_sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+                    }
+                    $install_sql = $install_sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+                } else {
+                    if (strpos($string, "COMMENT") !== false && (! (strpos($string, "COMMENT=") !== false) || ! (strpos($string, "COMMENT =") !== false))) {
+                        $database_sql = $database_sql . $string . "\n";
+                        $_sStrings = explode("COMMENT", $string);
+                        $install_sql = $install_sql . $_sStrings[0] . ",\n";
+                    } else {
+                        $database_sql = $database_sql . $string . "\n";
+                        $install_sql = $install_sql . $string . "\n";
+                    }
+                }
+            }
+            file_put_contents($dirPath . "/" . $table_name . ".sql", $install_sql);
+        }
+    }
+}
