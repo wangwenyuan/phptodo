@@ -162,7 +162,11 @@ function TDS($name, $val = " ")
             return null;
         }
     } else {
-        file_put_contents(TDConfig::$todo_runtime_path . "cache/" . $name, serialize($val));
+        if ($val == null) {
+            unlink(TDConfig::$todo_runtime_path . "cache/" . $name);
+        } else {
+            file_put_contents(TDConfig::$todo_runtime_path . "cache/" . $name, serialize($val));
+        }
     }
 }
 
