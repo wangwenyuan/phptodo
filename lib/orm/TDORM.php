@@ -134,52 +134,58 @@ class _TDORM
                         $this->bind_value[":" . $this->dot_to_line($key) . "_where_2"] = $val[1][1];
                     }
                     if (strtolower($val[0]) == "in") {
-                        $_in = "";
-                        for ($i = 0; $i < count($val[1]); $i = $i + 1) {
-                            if ($_in == "") {
-                                if (is_string($val[1][$i])) {
-                                    $_in = "'" . $val[1][$i] . "'";
+                        if (count($val[1]) > 0) {
+                            if (count($val[1]) == 1) {
+                                if ($this->where_sql == "") {
+                                    $this->where_sql = " where " . $key . " = :" . $this->dot_to_line($key) . "_where";
                                 } else {
-                                    $_in = $val[1][$i];
+                                    $this->where_sql = $this->where_sql . " and " . $key . " = :" . $this->dot_to_line($key) . "_where";
                                 }
+                                $this->bind_value[":" . $this->dot_to_line($key) . "_where"] = $val[1][0];
                             } else {
-                                if (is_string($val[1][$i])) {
-                                    $_in = $_in . "," . "'" . $val[1][$i] . "'";
+                                $_placeholder = ""; // 占位符
+                                for ($i = 0; $i < count($val[1]); $i = $i + 1) {
+                                    if ($_placeholder == "") {
+                                        $_placeholder = ":" . $this->dot_to_line($key) . "_where_" . $i;
+                                    } else {
+                                        $_placeholder = $_placeholder . ", :" . $this->dot_to_line($key) . "_where_" . $i;
+                                    }
+                                    $this->bind_value[":" . $this->dot_to_line($key) . "_where_" . $i] = $val[1][$i];
+                                }
+                                if ($this->where_sql == "") {
+                                    $this->where_sql = " where " . $key . " in (" . $_placeholder . ")";
                                 } else {
-                                    $_in = $_in . "," . $val[1][$i];
+                                    $this->where_sql = $this->where_sql . " and " . $key . " in (" . $_placeholder . ")";
                                 }
                             }
                         }
-                        if ($this->where_sql == "") {
-                            $this->where_sql = " where " . $key . " in (:" . $this->dot_to_line($key) . "_where)";
-                        } else {
-                            $this->where_sql = $this->where_sql . " and " . $key . " in (:" . $this->dot_to_line($key) . "_where)";
-                        }
-                        $this->bind_value[":" . $this->dot_to_line($key) . "_where"] = $_in;
                     }
                     if (strtolower($val[0]) == "not in") {
-                        $_in = "";
-                        for ($i = 0; $i < count($val[1]); $i = $i + 1) {
-                            if ($_in == "") {
-                                if (is_string($val[1][$i])) {
-                                    $_in = "'" . $val[1][$i] . "'";
+                        if (count($val[1]) > 0) {
+                            if (count($val[1]) == 1) {
+                                if ($this->where_sql == "") {
+                                    $this->where_sql = " where " . $key . " != :" . $this->dot_to_line($key) . "_where";
                                 } else {
-                                    $_in = $val[1][$i];
+                                    $this->where_sql = $this->where_sql . " and " . $key . " != :" . $this->dot_to_line($key) . "_where";
                                 }
+                                $this->bind_value[":" . $this->dot_to_line($key) . "_where"] = $val[1][0];
                             } else {
-                                if (is_string($val[1][$i])) {
-                                    $_in = $_in . "," . "'" . $val[1][$i] . "'";
+                                $_placeholder = ""; // 占位符
+                                for ($i = 0; $i < count($val[1]); $i = $i + 1) {
+                                    if ($_placeholder == "") {
+                                        $_placeholder = ":" . $this->dot_to_line($key) . "_where_" . $i;
+                                    } else {
+                                        $_placeholder = $_placeholder . ", :" . $this->dot_to_line($key) . "_where_" . $i;
+                                    }
+                                    $this->bind_value[":" . $this->dot_to_line($key) . "_where_" . $i] = $val[1][$i];
+                                }
+                                if ($this->where_sql == "") {
+                                    $this->where_sql = " where " . $key . " not in (" . $_placeholder . ")";
                                 } else {
-                                    $_in = $_in . "," . $val[1][$i];
+                                    $this->where_sql = $this->where_sql . " and " . $key . " not in (" . $_placeholder . ")";
                                 }
                             }
                         }
-                        if ($this->where_sql == "") {
-                            $this->where_sql = " where " . $key . " not in (:" . $this->dot_to_line($key) . "_where)";
-                        } else {
-                            $this->where_sql = $this->where_sql . " and " . $key . " not in (:" . $this->dot_to_line($key) . "_where)";
-                        }
-                        $this->bind_value[":" . $this->dot_to_line($key) . "_where"] = $_in;
                     }
                 } else {
                     if (is_string($var)) {
