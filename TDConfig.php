@@ -9,6 +9,9 @@
 class TDConfig
 {
 
+    // mysql表示系统使用的是mysql数据库，sqlite表示使用的是sqlite数据库。
+    public static $db_type = "mysql";
+
     public static $db_host = "";
 
     public static $db_port = "3306";
@@ -20,6 +23,9 @@ class TDConfig
     public static $db_password = "";
 
     public static $table_pre = "";
+
+    // 如果使用的是sqlite数据库，此处填写数据库文件地址，如果是其他数据库请留空
+    public static $sqlite_db = "";
 
     // phptodo中表示模块、控制器、方法的参数的前缀
     public static $todo_pre = "";

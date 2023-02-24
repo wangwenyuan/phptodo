@@ -351,7 +351,12 @@ class TDORM
         $this->_tdorm = new _TDORM($table_name);
         global $TDORMHANDLE;
         if ($TDORMHANDLE == null) {
-            $TDORMHANDLE = new PDO("mysql:host=" . TDConfig::$db_host . ";port=" . TDConfig::$db_port . ";dbname=" . TDConfig::$db_name . ";charset=utf8", TDConfig::$db_username, TDConfig::$db_password);
+            if (TDConfig::$db_type == "mysql") {
+                $TDORMHANDLE = new PDO("mysql:host=" . TDConfig::$db_host . ";port=" . TDConfig::$db_port . ";dbname=" . TDConfig::$db_name . ";charset=utf8", TDConfig::$db_username, TDConfig::$db_password);
+            } else if (TDConfig::$db_type == "sqlite") {
+                $TDORMHANDLE = new PDO("sqlite:" . TDConfig::$sqlite_db);
+                $TDORMHANDLE->exec("set names utf8");
+            }
         }
     }
 
