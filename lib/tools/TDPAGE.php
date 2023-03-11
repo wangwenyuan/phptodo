@@ -45,7 +45,7 @@ class TDPAGE
             $html = $html . "<span>首页</span><span>上一页</span><a href='" . TDU($arr) . "' >下一页</a>";
             $arr["p"] = $this->allPageNum;
             $html = $html . "<a href='" . TDU($arr) . "' >尾页</a>";
-        } else if ($this->p == allPageNum) {
+        } else if ($this->p == $this->allPageNum) {
             $arr = $_GET;
             $arr["p"] = 1;
             $html = $html . "<a href='" . TDU($arr) . "'>首页</a>";
@@ -53,7 +53,7 @@ class TDPAGE
             $html = $html . "<a href='" . TDU($arr) . "' >上一页</a><span>下一页</span><span>尾页</span>";
         } else if ($this->p < 1) {
             $html = "";
-        } else if ($this->p > allPageNum) {
+        } else if ($this->p > $this->allPageNum) {
             $html = "";
         } else {
             $arr = $_GET;
@@ -76,10 +76,11 @@ class TDPAGE
             } else {
                 $selected = "";
             }
-            $gotopage = $gotopage . "<option " . $selected . " value=\"" . TDU($arr) . "\">第 " . (i + 1) . " 页</option>";
+            $gotopage = $gotopage . "<option " . $selected . " value=\"" . TDU($arr) . "\">第 " . ($i + 1) . " 页</option>";
         }
         $gotopage = $gotopage . "</select></span>";
-        if ($this->total / $this->listRows < 1) {
+
+        if ($this->total <= $this->listRows) {
             return "";
         } else {
             return "<div>" . $html . $gotopage . "</div>";
