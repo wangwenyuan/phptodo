@@ -387,8 +387,10 @@ class TDORM
 
     public function data($array)
     {
-        include TDConfig::$todo_database_orm_path . $this->table_name . ".data.php";
-        $array = $this->get_add_row_data($table_columns, $array);
+        if(file_exists(TDConfig::$todo_database_orm_path . $this->table_name . ".data.php")){
+            include TDConfig::$todo_database_orm_path . $this->table_name . ".data.php";
+            $array = $this->get_add_row_data($table_columns, $array);
+        }
         $this->_tdorm->data($array);
         return $this;
     }
@@ -438,8 +440,10 @@ class TDORM
 
     public function save($data)
     {
-        include TDConfig::$todo_database_orm_path . $this->table_name . ".data.php";
-        $data = $this->get_edit_row_data($table_columns, $data);
+        if(file_exists(TDConfig::$todo_database_orm_path . $this->table_name . ".data.php")){
+            include TDConfig::$todo_database_orm_path . $this->table_name . ".data.php";
+            $data = $this->get_edit_row_data($table_columns, $data);
+        }
         $this->_tdorm->save($data);
         $sql = $this->_tdorm->get_sql();
         $bind_value = $this->_tdorm->get_bind_value();
@@ -559,7 +563,14 @@ class TDORM
 
     public function execute($sql)
     {
-        return $this->query($sql);
+        global $TDORMHANDLE;
+        return $TDORMHANDLE->exec($sql);
+        /*
+        $stmt = $TDORMHANDLE->prepare($sql);
+        $ret = $stmt->execute();
+        $stmt = null;
+        return $ret;
+        */
     }
 
     public function startTrans()

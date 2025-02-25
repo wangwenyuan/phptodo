@@ -55,7 +55,8 @@ class TDConfig
             'xlsx',
             'xls'
         ),
-        "rootPath" => "./Uploads/" // 图片保存的根目录
+        "rootPath" => __DIR__ . "/Uploads/", // 图片保存的根目录
+        "picUrl" => "./Uploads/" // 图片链接前缀
     );
 
     // phptodo的根目录

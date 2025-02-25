@@ -9,27 +9,27 @@
 class TDWIDGET
 {
 
-    static function text($name, $value)
+    static function text($name, $value,  $placeholder = '')
     {
-        $html = "<div class=\"ui-c-element\"><input type=\"text\" class=\"ui-c-input\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\" /></div>";
+        $html = "<div class=\"ui-c-element\"><input type=\"text\" class=\"ui-c-input\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\"  placeholder=\"".$placeholder."\" /></div>";
         return $html;
     }
 
-    static function password($name, $value)
+    static function password($name, $value,  $placeholder = '')
     {
-        $html = "<div class=\"ui-c-element\"><input type=\"password\" class=\"ui-c-input\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\" /></div>";
+        $html = "<div class=\"ui-c-element\"><input type=\"password\" class=\"ui-c-input\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\"  placeholder=\"".$placeholder."\" /></div>";
         return $html;
     }
 
     static function textarea($name, $value)
     {
-        $html = "<textarea name=\"" . $name . "\" id=\"" . $name . "\" class=\"input_textarea\">" . $value . "</textarea>";
+        $html = "<div class=\"ui-c-element\"><textarea name=\"" . $name . "\" id=\"" . $name . "\" class=\"input_textarea\">" . $value . "</textarea></div>";
         return $html;
     }
 
-    static function date($name, $value)
+    static function date($name, $value,  $placeholder = '')
     {
-        $html = "<input type=\"text\" class=\"ui-c-input\" style=\"width:225px;\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\" />";
+        $html = "<input type=\"text\" class=\"ui-c-input\" style=\"width:225px;\" name=\"" . $name . "\" value=\"" . $value . "\" id=\"" . $name . "\"  placeholder=\"".$placeholder."\" />";
         $html = $html . "<script>\r\n" . "    	    $(\"#" . $name . "\").jeDate({\r\n" . "                multiPane:true,\r\n" . "                onClose:false,\r\n" . "                minDate: \"1900-01-01 00:00:00\", //\r\n" . "                maxDate: \"2099-12-31 23:59:59\", //\r\n" . "                format: \"YYYY-MM-DD hh:mm:ss\"\r\n" . "            });\r\n" . "    	</script>";
         return $html;
     }
@@ -81,7 +81,7 @@ class TDWIDGET
     static function editor($name, $value)
     {
         $html = "<script id=\"" . $name . "\" name=\"" . $name . "\" type=\"text/plain\">\n" . $value . "\n</script>\n";
-        $html = $html . "<script type=\"text/javascript\">\nvar ue = UE.getEditor(\"" . $name . "\", {\n    serverUrl: \"" . TDConfig::$editor_controller . "\"\n});\n</script>";
+        $html = $html . "<script type=\"text/javascript\">\nvar ue_" . $name . " = UE.getEditor(\"" . $name . "\", {\n    serverUrl: \"" . TDConfig::$editor_controller . "\"\n});\n</script>";
         return $html;
     }
 
@@ -113,6 +113,21 @@ class TDWIDGET
         $html = $html . "<script>";
         $html = $html . "phptodo.address.init(\"" . $province_id . "\", \"" . $province_id_val . "\", \"" . $city_id . "\", \"" . $city_id_val . "\", \"" . $area_id . "\", \"" . $area_id_val . "\");";
         $html = $html . "</script>";
+        return $html;
+    }
+    
+    // 多选框
+    static function checkbox($name, $arr, $val = array())
+    {
+        $html = '';
+        for( $i = 0; $i < count($arr); $i = $i + 1 ){
+            $v = $arr[$i];
+            if (in_array($v, $val)) {
+                $html = $html . '<input class="ui-c-checkbox" type="checkbox" name="'.$name.'[]" title="'.$v.'" checked="checked">';
+            } else {
+                $html = $html . '<input class="ui-c-checkbox" type="checkbox" name="'.$name.'[]" title="'.$v.'">';
+            }
+        }
         return $html;
     }
 }

@@ -6,7 +6,7 @@
  * Author: wangwenyuan <827287829@qq.com>
  */
 exit();
-require_once 'PHPTODO.php';
+require_once __DIR__ . '/PHPTODO.php';
 /**
  * 该文件缺少权限验证，仅仅作为demo提供*
  */

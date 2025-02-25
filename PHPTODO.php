@@ -6,14 +6,14 @@
  * Author: wangwenyuan <827287829@qq.com>
  */
 error_reporting(E_ALL & ~ E_NOTICE & ~ E_WARNING);
-define(PHPTODO, true);
+define('PHPTODO', true);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    define(TD_IS_POST, true);
-    define(TD_IS_GET, false);
+    define('TD_IS_POST', true);
+    define('TD_IS_GET', false);
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    define(TD_IS_POST, false);
-    define(TD_IS_GET, true);
+    define('TD_IS_POST', false);
+    define('TD_IS_GET', true);
 }
 
 $php_self = $_SERVER["PHP_SELF"];
@@ -25,12 +25,12 @@ for ($i = 0; $i < count($php_self_arr) - 1; $i = $i + 1) {
     }
     $TD_ROOT = $TD_ROOT . "/" . $php_self_arr[$i];
 }
-define(TD_ROOT, $TD_ROOT);
+define('TD_ROOT', $TD_ROOT);
 
 if ($_SERVER["SERVER_PORT"] == 80 || $_SERVER["SERVER_PORT"] == 443) {
-    define(TD_URL, $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . TD_ROOT);
+    define('TD_URL', $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . TD_ROOT);
 } else {
-    define(TD_URL, $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . ":" . $_SERVER["SERVER_PORT"] . TD_ROOT);
+    define('TD_URL', $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . ":" . $_SERVER["SERVER_PORT"] . TD_ROOT);
 }
 
 require_once __DIR__ . "/TDConfig.php";
@@ -66,10 +66,10 @@ class PHPTODO
             $action = "index";
         }
 
-        define(TD_APP_NAME, $app);
-        define(TD_MODULE_NAME, $module);
-        define(TD_CONTROLLER_NAME, $controller);
-        define(TD_ACTION_NAME, $action);
+        define('TD_APP_NAME', $app);
+        define('TD_MODULE_NAME', $module);
+        define('TD_CONTROLLER_NAME', $controller);
+        define('TD_ACTION_NAME', $action);
 
         $file = "";
         if ($app != "") {
@@ -77,6 +77,7 @@ class PHPTODO
         } else {
             $file = TDConfig::$app_path . $module . "/Controller/" . $controller . TDConfig::$controller_suffix . ".php";
         }
+
         if (file_exists($file)) {
             require_once $file;
             if (class_exists($controller . TDConfig::$controller_suffix, false)) {

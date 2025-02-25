@@ -82,8 +82,8 @@ function writeSqlFile($dirPath)
             $database_sql = "";
             $install_sql = "";
             $strings = explode("\n", $sql);
-            for ($i = 0; $i < count($strings); $i = $i + 1) {
-                $string = $strings[$i];
+            for ($n = 0; $n < count($strings); $n = $n + 1) {
+                $string = $strings[$n];
                 if (strpos($string, "ENGINE=InnoDB") !== false) {
                     if (strpos($string, "COMMENT=") !== false || strpos($string, "COMMENT =") !== false) {
                         $strings2 = explode("COMMENT", $string);

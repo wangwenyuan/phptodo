@@ -9,11 +9,11 @@ session_start();
 
 function TDSESSION($key = "", $val = " ")
 {
-    if ($key == "" && $val == " ") {
-        return $_SESSION;
-    }
     if ($key == null) {
         session_destroy();
+    }
+    if ($key == "" && $val == " ") {
+        return $_SESSION;
     }
     if ($key != null && $key != "" && $val === null) {
         unset($_SESSION[$key]);
@@ -29,11 +29,11 @@ function TDSESSION($key = "", $val = " ")
 
 function TDCOOKIE($key = "", $val = " ", $expire = "", $path = "", $domain = "")
 {
-    if ($key == "" && $val == " ") {
-        return $_COOKIE;
-    }
     if ($key == null) {
         session_destroy();
+    }
+    if ($key == "" && $val == " ") {
+        return $_COOKIE;
     }
     if ($key != null && $key != "" && $val === null) {
         setcookie($key, "", time() - 3600);
