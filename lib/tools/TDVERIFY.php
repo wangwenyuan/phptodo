@@ -160,30 +160,30 @@ class TDVERIFY
         $px = $py = 0;
 
         // 曲线前部分
-        $A = mt_rand(1, $this->imageH / 2); // 振幅
-        $b = mt_rand(- $this->imageH / 4, $this->imageH / 4); // Y轴方向偏移量
-        $f = mt_rand(- $this->imageH / 4, $this->imageH / 4); // X轴方向偏移量
-        $T = mt_rand($this->imageH, $this->imageW * 2); // 周期
+        $A = mt_rand(1, (int)($this->imageH / 2)); // 振幅
+        $b = mt_rand(- (int)($this->imageH / 4), (int)($this->imageH / 4)); // Y轴方向偏移量
+        $f = mt_rand(- (int)($this->imageH / 4), (int)($this->imageH / 4)); // X轴方向偏移量
+        $T = mt_rand((int)($this->imageH), (int)($this->imageW * 2)); // 周期
         $w = (2 * M_PI) / $T;
 
         $px1 = 0; // 曲线横坐标起始位置
-        $px2 = mt_rand($this->imageW / 2, $this->imageW * 0.8); // 曲线横坐标结束位置
+        $px2 = mt_rand((int)($this->imageW / 2), (int)($this->imageW * 0.8)); // 曲线横坐标结束位置
 
         for ($px = $px1; $px <= $px2; $px = $px + 1) {
             if (0 != $w) {
                 $py = $A * sin($w * $px + $f) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
                 $i = (int) ($this->fontSize / 5);
                 while ($i > 0) {
-                    imagesetpixel($this->_image, $px + $i, $py + $i, $this->_color); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
+                    imagesetpixel($this->_image, (int)round($px + $i), (int)round($py + $i), $this->_color); // 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
                     $i --;
                 }
             }
         }
 
         // 曲线后部分
-        $A = mt_rand(1, $this->imageH / 2); // 振幅
-        $f = mt_rand(- $this->imageH / 4, $this->imageH / 4); // X轴方向偏移量
-        $T = mt_rand($this->imageH, $this->imageW * 2); // 周期
+        $A = mt_rand(1, (int)($this->imageH / 2)); // 振幅
+        $f = mt_rand(- (int)($this->imageH / 4), (int)($this->imageH / 4)); // X轴方向偏移量
+        $T = mt_rand((int)($this->imageH), (int)($this->imageW * 2)); // 周期
         $w = (2 * M_PI) / $T;
         $b = $py - $A * sin($w * $px + $f) - $this->imageH / 2;
         $px1 = $px2;
@@ -194,7 +194,7 @@ class TDVERIFY
                 $py = $A * sin($w * $px + $f) + $b + $this->imageH / 2; // y = Asin(ωx+φ) + b
                 $i = (int) ($this->fontSize / 5);
                 while ($i > 0) {
-                    imagesetpixel($this->_image, $px + $i, $py + $i, $this->_color);
+                    imagesetpixel($this->_image, (int)round($px + $i), (int)round($py + $i), $this->_color);
                     $i --;
                 }
             }
@@ -209,7 +209,7 @@ class TDVERIFY
             $noiseColor = imagecolorallocate($this->_image, mt_rand(150, 225), mt_rand(150, 225), mt_rand(150, 225));
             for ($j = 0; $j < 5; $j ++) {
                 // 绘杂点
-                imagestring($this->_image, 5, mt_rand(- 10, $this->imageW), mt_rand(- 10, $this->imageH), $codeSet[mt_rand(0, 29)], $noiseColor);
+                imagestring($this->_image, 5, mt_rand(- 10, (int)($this->imageW)), mt_rand(- 10, (int)($this->imageH)), $codeSet[mt_rand(0, 29)], $noiseColor);
             }
         }
     }
